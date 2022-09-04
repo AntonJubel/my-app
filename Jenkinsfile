@@ -1,6 +1,6 @@
 node{
    stage('SCM Checkout'){
-     git 'https://github.com/Thamilselvan1997/my-app'
+     git 'https://github.com/AntonJubel/my-app'
    }
     stage('Compile-Package'){
 
@@ -15,13 +15,13 @@ node{
 	        }
 	    }
    stage('Build Docker Imager'){
-   sh 'docker build -t thamilselvan/myweb:0.0.2 .'
+   sh 'docker build -t jonsnow1031/myweb:0.0.2 .'
    }
    stage('Docker Image Push'){
    withCredentials([string(credentialsId: 'dockerPass', variable: 'dockerPassword')]) {
-   sh "docker login -u thamilselvan -p ${dockerPassword}"
+   sh "docker login -u jonsnow1031 -p ${dockerPassword}"
     }
-   sh 'docker push thamilselvan/myweb:0.0.2'
+   sh 'docker push jonsnow1031/myweb:0.0.2'
    }
    stage('Nexus Image Push'){
    sh "docker login -u admin -p admin123 35.154.232.134:5152"
@@ -35,7 +35,7 @@ node{
 		//  do nothing if there is an exception
 	}
    stage('Docker deployment'){
-   sh 'docker run -d -p 8090:8080 --name tomcattest thamilselvan/myweb:0.0.2' 
+   sh 'docker run -d -p 8090:8080 --name tomcattest jonsnow1031/myweb:0.0.2' 
    }
 }
 }
